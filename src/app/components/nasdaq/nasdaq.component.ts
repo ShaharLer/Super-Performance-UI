@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { NasdaqComposite } from '../../models/NasdaqComposite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-
+import { NasdaqService } from '../../services/nasdaq.service';
 
 @Component({
   selector: 'app-nasdaq',
@@ -11,6 +11,7 @@ import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-b
   styleUrls: ['./nasdaq.component.css']
 })
 export class NasdaqComponent implements OnInit {
+
   title = 'Nasdaq Composite';
   nasdaqEntries: NasdaqComposite[];
   tableHeaders = ['Date', 'MA(3)', 'MA(3) Change', 'MA(7)', 'MA(7) Change', 'Action'];
@@ -18,8 +19,11 @@ export class NasdaqComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate | null = null;
 
-  constructor(private httpClient: HttpClient, private calendar: NgbCalendar,
-              public formatter: NgbDateParserFormatter, private spinner: NgxSpinnerService) {
+  constructor(private calendar: NgbCalendar,
+              private httpClient: HttpClient,
+              private spinner: NgxSpinnerService,
+              private nasdaqService: NasdaqService,
+              public formatter: NgbDateParserFormatter) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getToday();
   }
@@ -34,22 +38,15 @@ export class NasdaqComponent implements OnInit {
 
   convertDatesAndCallNasdaqInfo(): void {
     this.spinner.show();
-    const convertedFromDate = this.convertToDateObject(this.fromDate);
-    const convertedToDate = this.convertToDateObject(this.toDate);
-    this.getNasdaqInfo(convertedFromDate, convertedToDate);
+    this.getNasdaqInfo(this.convertToDateObject(this.fromDate), this.convertToDateObject(this.toDate));
   }
 
   convertToDateObject(date: NgbDate): Date | null {
     return date ? new Date(date.year, date.month - 1, date.day + 1) : null;
   }
 
-  getNasdaqInfo(startDate: Date, endDate?: Date): void {
-    let params = new HttpParams();
-    params = startDate ? params.append('start_date', startDate.toISOString()) : params;
-    params = endDate ? params.append('end_date', endDate.toISOString()) : params;
-    console.log(params);
-
-    this.httpClient.get<NasdaqComposite[]>('http://localhost:8000/nasdaq/', {params}).subscribe(
+  getNasdaqInfo(fromDate: Date, toDate: Date): void {
+    this.nasdaqService.getNasdaqInfo(fromDate, toDate).subscribe(
       (nasdaqEntries: NasdaqComposite[]) => {
         this.nasdaqEntries = nasdaqEntries;
         this.spinner.hide();
