@@ -7,11 +7,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
+import { NasdaqComponent } from './components/nasdaq/nasdaq.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NasdaqComponent
   ],
   imports: [
     BrowserModule,
