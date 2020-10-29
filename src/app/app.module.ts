@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NasdaqComponent } from './components/nasdaq/nasdaq.component';
 import { NasdaqSmaListComponent } from './components/nasdaq-sma-list/nasdaq-sma-list.component';
+import { NasdaqDatesBarComponent } from './components/nasdaq-dates-bar/nasdaq-dates-bar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NasdaqComponent,
-    NasdaqSmaListComponent
+    NasdaqSmaListComponent,
+    NasdaqDatesBarComponent
   ],
   imports: [
     BrowserModule,
