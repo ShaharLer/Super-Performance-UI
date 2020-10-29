@@ -59,47 +59,7 @@
     <button type="button" (click)="onGetNsadaqInfoClicked()" class="btn btn-primary" style="margin-left: 20px;">Get Nasdaq info</button>
   </form>
 
-  <table class="table table-bordered table-secondary" style="margin-top: 20px;">
-    <thead class="table-dark">
-      <tr>
-        <th *ngFor="let header of tableHeaders">{{ header }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let nasdaq of nasdaqEntries">
-        <th scope="row">
-          {{ nasdaq.date | date:'dd-MM-yyyy' }}
-        </th>
-        <th scope="row">
-          {{ nasdaq.ma3 }}
-        </th>
-        <th scope="row" [ngStyle]="{'color': (nasdaq.ma3Change > 0) ? 'green' : 'red'}">
-          {{ nasdaq.ma3Change }}%
-        </th>
-        <th scope="row">
-          {{ nasdaq.ma7 }}
-        </th>
-        <th scope="row" [ngStyle]="{'color': (nasdaq.ma7Change > 0) ? 'green' : 'red'}">
-          {{ nasdaq.ma7Change }}%
-        </th>
-        <ng-container
-          *ngIf="nasdaq.isBuyMarket; then buy; else hold">
-        </ng-container>
-
-        <ng-template #buy>
-          <th class="marketStatus" scope="row" style="color: white; background-color: green; opacity: 0.7;">
-            BUY
-          </th>
-        </ng-template>
-
-        <ng-template #hold>
-          <th class="marketStatus" style="color: white; background-color: red; opacity: 0.755;">
-            HOLD
-          </th>
-        </ng-template>
-      </tr>
-    </tbody>
-  </table>
+  <app-nasdaq-sma-list [nasdaqEntries]="nasdaqEntries"></app-nasdaq-sma-list>
 
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-climbing-dot" [fullScreen] = "true">
       <p style="color: white" > Loading... </p>

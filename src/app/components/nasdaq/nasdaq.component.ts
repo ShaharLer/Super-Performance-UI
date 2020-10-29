@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { NasdaqComposite } from '../../models/NasdaqComposite';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NasdaqService } from '../../services/nasdaq.service';
+import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-nasdaq',
@@ -14,13 +13,11 @@ export class NasdaqComponent implements OnInit {
 
   title = 'Nasdaq Composite';
   nasdaqEntries: NasdaqComposite[];
-  tableHeaders = ['Date', 'MA(3)', 'MA(3) Change', 'MA(7)', 'MA(7) Change', 'Action'];
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate;
   toDate: NgbDate | null = null;
 
   constructor(private calendar: NgbCalendar,
-              private httpClient: HttpClient,
               private spinner: NgxSpinnerService,
               private nasdaqService: NasdaqService,
               public formatter: NgbDateParserFormatter) {

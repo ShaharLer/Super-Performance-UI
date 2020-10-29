@@ -1,0 +1,7 @@
+.marketStatus {
+  border-radius: 20px;
+}
+
+.marketStatus:hover {
+  border-radius: 0px;
+}
