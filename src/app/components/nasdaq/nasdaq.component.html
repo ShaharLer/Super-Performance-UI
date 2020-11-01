@@ -1,8 +1,6 @@
 <div>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <h1 class="navbar-brand" href="#">Nasdaq Composite</h1>
-  </nav>
   <app-nasdaq-dates-bar (sendDates)="getNasdaqInfoByDates($event)"></app-nasdaq-dates-bar>
+
   <app-nasdaq-sma-list *ngIf="!serverError; else error" [nasdaqEntries]="nasdaqEntries$ | async">
   </app-nasdaq-sma-list>
   <ng-template #error>
