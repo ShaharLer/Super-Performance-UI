@@ -14,16 +14,15 @@ export class NasdaqService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getNasdaqInfo(fromDate: Date, toDate: Date): Observable<NasdaqComposite[]> {
+  getNasdaqInfo(fromDate: Date, toDate?: Date): Observable<NasdaqComposite[]> {
     const params = this.setHttpParams(fromDate, toDate);
     return this.httpClient.get<NasdaqComposite[]>(this.nasdaqUrl, {params});
   }
 
-  setHttpParams(fromDate: Date, toDate: Date): HttpParams {
+  setHttpParams(fromDate: Date, toDate?: Date): HttpParams {
     let params = new HttpParams();
     params = params.append(this.fromDateParamKey, fromDate.toISOString());
-    params = params.append(this.toDateParamKey, toDate.toISOString());
-    console.log(params);
+    params = toDate ? params.append(this.toDateParamKey, toDate.toISOString()) : params;
     return params;
   }
 }

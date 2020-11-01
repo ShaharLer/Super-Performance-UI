@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+    "ag-grid-angular": "^24.1.0",
+    "ag-grid-community": "^24.1.0",
     "bootstrap": "^4.5.3",
     "ngx-spinner": "^10.0.1",
     "rxjs": "~6.6.0",

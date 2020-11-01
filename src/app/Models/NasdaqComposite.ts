@@ -1,8 +1,8 @@
 export class NasdaqComposite {
-  date: Date;
+  date: string;
   ma3: number;
-  ma3Change: number;
+  ma3Change: string;
   ma7: number;
-  ma7Change: number;
-  isBuyMarket: boolean;
+  ma7Change: string;
+  action: string;
 }

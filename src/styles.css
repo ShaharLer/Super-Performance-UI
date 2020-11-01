@@ -2,3 +2,33 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ag-header-viewport {
+  background: #262626;
+}
+
+.ag-header-group-cell-label, .ag-header-cell-label {
+  justify-content: center;
+  font-weight: bold;
+}
+
+.ag-header-cell {
+  color: white;
+  font-size: medium;
+}
+
+.ag-row:not(.ag-row-first) {
+  border-top: 1px solid black;
+}
+
+.ag-cell {
+  background-color: #e6e6e6;
+}
+
+.ag-row .ag-cell {
+  display: flex;
+  justify-content: center;
+  font-size: medium;
+  font-weight: bold;
+  align-items: center;
+}

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { AppComponent } from './app.component';
 import { NasdaqComponent } from './components/nasdaq/nasdaq.component';
@@ -25,7 +26,8 @@ import { NasdaqDatesBarComponent } from './components/nasdaq-dates-bar/nasdaq-da
     FormsModule,
     NgbModule,
     NgxSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AgGridModule.withComponents([])
   ],
   providers: [],
   bootstrap: [AppComponent]
