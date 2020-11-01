@@ -8,6 +8,8 @@ import { NasdaqComposite } from '../../models/NasdaqComposite';
 })
 export class NasdaqSmaListComponent {
 
+  loadingTemplate: string;
+  noRowsTemplate: string;
   gridApi: any;
   @Input() nasdaqEntries: NasdaqComposite[];
   columnsDef = [
@@ -23,6 +25,11 @@ export class NasdaqSmaListComponent {
     lockPosition: true,
     wrapText: true
   };
+
+  constructor() {
+    this.loadingTemplate = `<span class="ag-overlay-loading-center"></span>`;
+    this.noRowsTemplate = `<span></span>`;
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {

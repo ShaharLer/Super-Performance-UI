@@ -1,8 +1,10 @@
+import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { NasdaqComposite } from '../../models/NasdaqComposite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NasdaqService } from '../../services/nasdaq.service';
 import * as constatnts from '../nasdaq-constants';
+import { finalize, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nasdaq',
@@ -12,7 +14,8 @@ import * as constatnts from '../nasdaq-constants';
 export class NasdaqComponent {
 
   title = 'Nasdaq Composite';
-  nasdaqEntries: NasdaqComposite[];
+  nasdaqEntries$: Observable<NasdaqComposite[]>;
+  serverError: boolean;
 
   constructor(private spinner: NgxSpinnerService, private nasdaqService: NasdaqService) { }
 
@@ -23,24 +26,16 @@ export class NasdaqComponent {
   }
 
   getNasdaqInfo(fromDate: Date, toDate: Date): void {
+    this.serverError = false;
     this.spinner.show();
-    this.nasdaqService.getNasdaqInfo(fromDate, toDate).subscribe(
-      (nasdaqEntries: NasdaqComposite[]) => this.updateNasdaqEntries(nasdaqEntries),
-      error => this.onError(error)
-    );
-  }
-
-  updateNasdaqEntries(nasdaqEntries: NasdaqComposite[]): void {
-    this.nasdaqEntries = nasdaqEntries;
-    this.hideSpinner();
-  }
-
-  onError(error: any): void {
-    console.log(error);
-    this.hideSpinner();
-  }
-
-  hideSpinner(): void {
-    this.spinner.hide();
+    this.nasdaqEntries$ = this.nasdaqService.getNasdaqInfo(fromDate, toDate)
+      .pipe(
+        catchError(err => {
+          console.error(err);
+          this.serverError = true;
+          return [];
+        }),
+        finalize(() => this.spinner.hide())
+      );
   }
 }

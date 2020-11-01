@@ -9,5 +9,7 @@
     [rowHeight]=40
     [suppressHorizontalScroll]=false
     (gridReady)="onGridReady($event)"
-    (paginationChanged)="onContentChanges()">
+    (paginationChanged)="onContentChanges()"
+    [overlayLoadingTemplate]="loadingTemplate"
+    [overlayNoRowsTemplate]="noRowsTemplate">
 </ag-grid-angular>
