@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/home">Home</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/nasdaq">Nasdaq composite</a>
+    </li>
+    <li class="nav-item dropdown d-inline-block" ngbDropdown>
+        <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Stocks processing</a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem>Scrapper</button>
+          <button ngbDropdownItem>Rater</button>
+          <button ngbDropdownItem>Technical</button>
+      </div>
+    </li>
+  </ul>
+</nav>

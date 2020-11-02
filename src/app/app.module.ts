@@ -12,7 +12,8 @@ import { AppComponent } from './app.component';
 import { NasdaqComponent } from './components/nasdaq/nasdaq.component';
 import { NasdaqSmaListComponent } from './components/nasdaq-sma-list/nasdaq-sma-list.component';
 import { NasdaqDatesBarComponent } from './components/nasdaq-dates-bar/nasdaq-dates-bar.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
     NasdaqComponent,
     NasdaqSmaListComponent,
     NasdaqDatesBarComponent,
-    HomeComponent
+    HomeComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
