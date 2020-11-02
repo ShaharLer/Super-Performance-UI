@@ -9,9 +9,9 @@ import { AgGridModule } from 'ag-grid-angular';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NasdaqComponent } from './components/nasdaq/nasdaq.component';
-import { NasdaqSmaListComponent } from './components/nasdaq-sma-list/nasdaq-sma-list.component';
-import { NasdaqDatesBarComponent } from './components/nasdaq-dates-bar/nasdaq-dates-bar.component';
+import { NasdaqComponent } from './components/nasdaq-composite/nasdaq/nasdaq.component';
+import { NasdaqSmaListComponent } from './components/nasdaq-composite/nasdaq-sma-list/nasdaq-sma-list.component';
+import { NasdaqDatesBarComponent } from './components/nasdaq-composite/nasdaq-dates-bar/nasdaq-dates-bar.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 

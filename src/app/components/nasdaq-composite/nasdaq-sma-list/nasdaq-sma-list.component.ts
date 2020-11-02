@@ -1,5 +1,5 @@
 import { Component, Input, HostListener } from '@angular/core';
-import { NasdaqComposite } from '../../models/NasdaqComposite';
+import { NasdaqComposite } from '../../../models/NasdaqComposite';
 
 @Component({
   selector: 'app-nasdaq-sma-list',

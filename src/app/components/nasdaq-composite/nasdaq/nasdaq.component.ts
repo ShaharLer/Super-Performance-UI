@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
-import { NasdaqComposite } from '../../models/NasdaqComposite';
+import { NasdaqComposite } from '../../../models/NasdaqComposite';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NasdaqService } from '../../services/nasdaq.service';
+import { NasdaqService } from '../../../services/nasdaq.service';
 import * as constatnts from '../nasdaq-constants';
 import { finalize, catchError } from 'rxjs/operators';
 
