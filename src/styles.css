@@ -32,3 +32,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-weight: bold;
   align-items: center;
 }
+
+.error {
+  text-align: center;
+  margin: 10vw 8vw;
+  font-weight: bold;
+}

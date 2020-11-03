@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { NasdaqComposite } from '../../../models/NasdaqComposite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NasdaqService } from '../../../services/nasdaq.service';
 import * as constatnts from '../nasdaq-constants';
+import { Observable } from 'rxjs';
 import { finalize, catchError } from 'rxjs/operators';
 
 @Component({
@@ -13,7 +13,6 @@ import { finalize, catchError } from 'rxjs/operators';
 })
 export class NasdaqComponent {
 
-  title = 'Nasdaq Composite';
   nasdaqEntries$: Observable<NasdaqComposite[]>;
   serverError: boolean;
 
