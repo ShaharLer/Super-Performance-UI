@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TechnicallyValidStock } from './../../models/TechnicallyValidStock';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { StocksProcessingService } from '../../services/stocks-processing.service';
-import { Observable } from 'rxjs';
 import { finalize, catchError } from 'rxjs/operators';
-import { type } from 'os';
 
 @Component({
   selector: 'app-technically-valid',
@@ -13,10 +11,18 @@ import { type } from 'os';
 })
 export class TechnicallyValidComponent implements OnInit {
 
-  technicallyValidStocks$: Observable<TechnicallyValidStock[]>;
+  technicallyValidStocks: TechnicallyValidStock[];
   tableHeaders = ['symbol', 'name', 'pivot', 'stock charts'];
   stockChartsUrl = 'https://stockcharts.com/h-sc/ui?s=';
+  updatedPivots = new Map<string, number>();
+  dbUpdatedSuccessfullyMessage = 'DB was updated succesfully ({0} : {1})';
+  dbUpdateFailedMessage = 'Error: Failed to update {0} with pivot {1} in the DB, please try again later';
+  wrongPivotType = 'Error: Cannot update {0} - pivot must be a float number (the given value was {1})';
+  showModal = false;
+  dbUpdateSucceded: boolean;
+  modalBody: string;
   serverError: boolean;
+  spinnerText: string;
 
   constructor(private spinner: NgxSpinnerService,
               private stocksProcessingService: StocksProcessingService) { }
@@ -26,33 +32,120 @@ export class TechnicallyValidComponent implements OnInit {
   }
 
   getTechnicallyValidStocks(): void {
-    this.serverError = false;
-    this.spinner.show();
-    this.technicallyValidStocks$ = this.stocksProcessingService.getTechnicallyValidStocks()
-      .pipe(
-        catchError(err => {
-          console.error(err);
-          this.serverError = true;
-          return [];
-        }),
-        finalize(() => this.spinner.hide())
-      );
+    this.beforeFetchingStocks();
+    this.stocksProcessingService.getTechnicallyValidStocks()
+    .pipe(
+      finalize(() => {
+        this.spinner.hide();
+      })
+    )
+    .subscribe(
+      (data: TechnicallyValidStock[]) => this.updateTechnicallyValidStocks(data),
+      () => this.onTechnicallyValidStockFetchFailed()
+    );
   }
 
-  onUpdateClicked(pivotInput: any): void {
+  updateTechnicallyValidStocks(data: TechnicallyValidStock[]): void {
+    this.technicallyValidStocks = data;
+    data.map(stock => this.updatedPivots[stock.symbol] = stock.pivot);
+  }
+
+  onTechnicallyValidStockFetchFailed(): void {
+    this.serverError = true;
+  }
+
+  isSaveDisabled(symbol: string, pivotInput: any): boolean {
+    const pivot = Number(pivotInput.value);
+    return pivotInput.disabled || (this.isPivotValid(pivot) && pivot === this.updatedPivots[symbol]);
+  }
+
+  isCancelDisabled(pivotInput: any): boolean {
+    return pivotInput.disabled;
+  }
+
+  onUpdateClicked(pivotInput: any, symbol: string): void {
     pivotInput.disabled = false;
+    pivotInput.focus();
+  }
+
+  onCancelClicked(symbol: string, pivotInput: any): void {
+    pivotInput.value = this.updatedPivots[symbol];
+    pivotInput.disabled = true;
   }
 
   onSaveClicked(symbol: string, pivotInput: any): void {
-    if (isNaN(Number(pivotInput.value))) {
-      console.log('NaN');
+    if (!this.isPivotValid(Number(pivotInput.value))) {
+      this.pivotUpdateFailed(symbol, pivotInput, this.wrongPivotType);
     } else {
-      this.stocksProcessingService.updateStockPivot(symbol, pivotInput.value)
-      .subscribe(
-        data => console.log(data),
-        err => console.log(err)
-      );
-      pivotInput.disabled = true;
+      this.updatePivot(symbol, pivotInput);
     }
+  }
+
+  isPivotValid(pivot: number): boolean {
+    return !(isNaN(pivot));
+  }
+
+  updatePivot(symbol: string, pivotInput: any): void {
+    this.beforeUpdatingPivot();
+    this.stocksProcessingService.updateStockPivot(symbol, Number(pivotInput.value))
+    .pipe(
+      finalize(() => {
+        this.spinner.hide();
+      })
+    )
+    .subscribe(
+      () => this.pivotUpdateSucceeded(symbol, pivotInput),
+      () => this.pivotUpdateFailed(symbol, pivotInput, this.dbUpdateFailedMessage)
+    );
+  }
+
+  beforeFetchingStocks(): void {
+    this.serverError = false;
+    this.spinnerText = 'Loading...';
+    this.showSpinner();
+  }
+
+  beforeUpdatingPivot(): void {
+    this.spinnerText = 'Saving...';
+    this.showSpinner();
+  }
+
+  showSpinner(): void {
+    this.spinner.show();
+  }
+
+  pivotUpdateSucceeded(symbol: string, pivotInput: any): void {
+    const message = this.formatString(this.dbUpdatedSuccessfullyMessage, [symbol, pivotInput.value]);
+    this.dbUpdateSucceded = true;
+    this.updatedPivots[symbol] = Number(pivotInput.value);
+    this.execModal(message, pivotInput);
+  }
+
+  pivotUpdateFailed(symbol: string, pivotInput: any, bodyMessage: string): void {
+    const message = this.formatString(bodyMessage, [symbol, pivotInput.value]);
+    this.dbUpdateSucceded = false;
+    pivotInput.value = this.updatedPivots[symbol];
+    this.execModal(message, pivotInput);
+  }
+
+  formatString(str: string, args: string[]): string {
+    for (let i = 0; i < args.length; i++) {
+      str = str.replace('{' + i + '}', args[i]);
+    }
+    return str;
+  }
+
+  execModal(bodyMessage: string, pivotInput: any): void {
+    pivotInput.disabled = true;
+    this.modalBody = bodyMessage;
+    this.openModal();
+  }
+
+  openModal(): void {
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
   }
 }

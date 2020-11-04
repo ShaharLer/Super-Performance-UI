@@ -1,45 +1,42 @@
-<div style="align-items: center;">
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded mr-2" alt="...">
-      <strong class="mr-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
+<div class="technical-stock-main-div">
+  <div class="modal" id="myModal" [ngClass]="{'show': showModal}">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body"[ngClass]="dbUpdateSucceded ? 'db-update-success' : 'db-update-failure'">
+          {{ modalBody }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 
-
-  <table *ngIf="!serverError; else error" class="table table-bordered table-secondary"
-          style="margin-top: 20px; width: 55vw; margin: 1.5vw 15vw; text-align: center;">
+  <table *ngIf="!serverError; else error" class="table table-bordered table-secondary">
     <thead class="table-dark">
       <tr>
         <th *ngFor="let header of tableHeaders">{{ header | titlecase }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let stock of technicallyValidStocks$ | async">
-        <th scope="row">{{ stock.symbol }}</th>
-        <th scope="row">{{ stock.name }}</th>
-        <th scope="row">
-          <div style="display: flex;">
-            <input #pivot type="text" class="form-control" style="text-align: center;"
-                          placeholder="Enter pivot..." [(ngModel)]="stock.pivot" [disabled]="true">
-
-            <button type="button" class="btn btn-primary"
-                          (click)="onUpdateClicked(pivot)">Change</button>
-
-            <button type="button" class="btn btn-success" [disabled]="pivot.disabled || !pivot.value"
-                          (click)="onSaveClicked(stock.symbol, pivot)">Save</button>
-
-            <!-- (input)="onPivotChanged($event.target.value)" -->
+      <tr *ngFor="let stock of technicallyValidStocks">
+        <th>{{ stock.symbol }}</th>
+        <th>{{ stock.name }}</th>
+        <th>
+          <div class="pivot-div">
+            <input #pivotInput type="text" class="form-control" placeholder="Enter pivot..." [(ngModel)]="stock.pivot" [disabled]="true">
+            <button type="button" class="btn btn-primary" (click)="onUpdateClicked(pivotInput, stock.symbol)">
+              Change
+            </button>
+            <button type="button" class="btn btn-success" [disabled]="isSaveDisabled(stock.symbol, pivotInput)" (click)="onSaveClicked(stock.symbol, pivotInput)">
+              Save
+            </button>
+            <button type="button" class="btn btn-danger" [disabled]="isCancelDisabled(pivotInput)" (click)="onCancelClicked(stock.symbol, pivotInput)">
+              Cancel
+            </button>
           </div>
         </th>
-        <th scope="row">
+        <th>
           <a href="{{stockChartsUrl + stock.symbol}}" target="_blank">
             <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
@@ -53,11 +50,11 @@
   <ng-template #error>
     <div class="alert alert-danger error" role="alert">
       Oops...<br/>An error occured while making an HTTP call to the server.<br/>
-      Please try again by clicking <span style="cursor: pointer;" (click)="getTechnicallyValidStocks()">here</span>
+      Please try again by clicking <span class="retry" (click)="getTechnicallyValidStocks()">here</span>
     </div>
   </ng-template>
 
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-climbing-dot" [fullScreen] = "true">
-    <p style="color: white" > Loading... </p>
+    <p class="spinner">{{ spinnerText }}</p>
   </ngx-spinner>
 </div>

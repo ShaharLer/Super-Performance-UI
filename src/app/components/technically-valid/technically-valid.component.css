@@ -1,0 +1,55 @@
+.technical-stock-main-div {
+  text-align: center;
+  margin-top: 20px;
+  width: 60vw;
+  margin: 1.5vw 15vw;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-body {
+  font-weight: bold;
+  color: white;
+}
+
+.modal-footer {
+  justify-content: center;
+}
+
+.pivot-div {
+  display: flex;
+}
+
+.form-control {
+  text-align: center;
+}
+
+.btn {
+  margin-left: 10px;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+tr>th {
+  vertical-align: middle;
+}
+
+.db-update-success {
+  color: #008c00;
+}
+
+.db-update-failure {
+  color: #e60000;
+}
+
+.spinner {
+  color: white;
+}
+
+.retry {
+  cursor: pointer;
+}
