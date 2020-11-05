@@ -9,6 +9,7 @@ import * as constatnts from '../nasdaq-constants';
 })
 export class NasdaqDatesBarComponent implements OnInit {
 
+  stockChartsNasdaqUrl = 'https://stockcharts.com/h-sc/ui?s=COMPQ';
   @Output() sendDates = new EventEmitter<Map<string, Date>>();
   fromDate: NgbDate;
   toDate: NgbDate;

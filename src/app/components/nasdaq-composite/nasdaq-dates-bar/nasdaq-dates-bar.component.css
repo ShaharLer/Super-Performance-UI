@@ -1,5 +1,10 @@
+.nasdaq-bar {
+  margin: 1.5vw 8vw;
+}
+
 .nasdaq-dates-bar {
-  margin: 1.5vw 8vw
+  flex: 5;
+  display: flex;
 }
 
 .form-group.hidden {
@@ -38,7 +43,11 @@ button.calendar, button.calendar:active {
   background-position: center;
 }
 
-.nasdaq-info-button {
+.get-nasdaq-info-button {
   margin-left: 20px;
-  font-weight: bold;
+}
+
+.stock-charts {
+  flex: 1;
+  text-align: right !important;
 }

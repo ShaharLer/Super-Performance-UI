@@ -1,12 +1,14 @@
 <div class="technical-stock-main-div">
-  <div class="modal" id="myModal" [ngClass]="{'show': showModal}">
+  <div class="modal" id="actionModal" [ngClass]="{'show': showModal}">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-body"[ngClass]="dbUpdateSucceded ? 'db-update-success' : 'db-update-failure'">
+        <div class="modal-body"[ngClass]="(dbUpdateSucceded && !stockToRemove) ? 'db-update-success' : 'db-update-failure'">
           {{ modalBody }}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()" data-dismiss="modal">Close</button>
+          <button *ngIf="stockToRemove" type="button" class="btn btn-secondary" (click)="afterRemoveAlert()" data-dismiss="modal">Cancel</button>
+          <button *ngIf="stockToRemove" type="button" class="btn btn-danger" (click)="onRemoveConfirmationClicked()" data-dismiss="modal">Remove</button>
+          <button *ngIf="!stockToRemove" type="button" class="btn btn-secondary" (click)="closeModal()" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -31,8 +33,11 @@
             <button type="button" class="btn btn-success" [disabled]="isSaveDisabled(stock.symbol, pivotInput)" (click)="onSaveClicked(stock.symbol, pivotInput)">
               Save
             </button>
-            <button type="button" class="btn btn-danger" [disabled]="isCancelDisabled(pivotInput)" (click)="onCancelClicked(stock.symbol, pivotInput)">
+            <button type="button" class="btn btn-secondary" [disabled]="isCancelDisabled(pivotInput)" (click)="onCancelClicked(stock.symbol, pivotInput)">
               Cancel
+            </button>
+            <button type="button" class="btn btn-danger" (click)="onRemoveClicked(stock.symbol)">
+              Remove
             </button>
           </div>
         </th>
