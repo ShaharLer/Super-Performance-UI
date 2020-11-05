@@ -24,7 +24,6 @@ export class StocksProcessingService {
 
   updateStockPivot(symbol: string, pivotValue: number): Observable<any> {
     const body = this.setBody(symbol, pivotValue);
-    console.log(body);
     return this.httpClient.put<any>(this.pivotUrl, body, {headers});
   }
 
@@ -33,5 +32,9 @@ export class StocksProcessingService {
     body[this.symbolParamKey] = symbol;
     body[this.pivotParamKey] = pivotValue.toString();
     return body;
+  }
+
+  removeTechnicalStock(symbol: string): Observable<any> {
+    return this.httpClient.delete<any>(`${this.pivotUrl}${symbol}/`);
   }
 }

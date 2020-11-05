@@ -37,15 +37,15 @@ export class TechnicallyValidComponent implements OnInit {
   getTechnicallyValidStocks(): void {
     this.beforeFetchingStocks();
     this.stocksProcessingService.getTechnicallyValidStocks()
-    .pipe(
-      finalize(() => {
-        this.spinner.hide();
-      })
-    )
-    .subscribe(
-      (data: TechnicallyValidStock[]) => this.updateTechnicallyValidStocks(data),
-      () => this.onTechnicallyValidStockFetchFailed()
-    );
+      .pipe(
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        (data: TechnicallyValidStock[]) => this.updateTechnicallyValidStocks(data),
+        () => this.onTechnicallyValidStockFetchFailed()
+      );
   }
 
   updateTechnicallyValidStocks(data: TechnicallyValidStock[]): void {
@@ -84,25 +84,6 @@ export class TechnicallyValidComponent implements OnInit {
     }
   }
 
-  onRemoveClicked(symbol: string): void {
-    const message = this.formatString(this.verifyRemovingStockMessage, [symbol]);
-    this.stockToRemove = symbol;
-    this.openModal(message);
-  }
-
-  onRemoveConfirmationClicked(): void {
-    // call service to remove from DB
-    this.technicallyValidStocks = this.technicallyValidStocks.filter(stock => stock.symbol !== this.stockToRemove);
-    // in case of failure
-    // const message = this.formatString(this.removingStockFailedMessage, [this.stockToRemove]);
-    this.afterRemoveAlert();
-  }
-
-  afterRemoveAlert(): void {
-    this.stockToRemove = undefined;
-    this.closeModal();
-  }
-
   isPivotValid(pivot: number): boolean {
     return !(isNaN(pivot));
   }
@@ -110,15 +91,55 @@ export class TechnicallyValidComponent implements OnInit {
   updatePivot(symbol: string, pivotInput: any): void {
     this.beforeUpdatingPivot();
     this.stocksProcessingService.updateStockPivot(symbol, Number(pivotInput.value))
-    .pipe(
-      finalize(() => {
-        this.spinner.hide();
-      })
-    )
-    .subscribe(
-      () => this.pivotUpdateSucceeded(symbol, pivotInput),
-      () => this.pivotUpdateFailed(symbol, pivotInput, this.updateFailedMessage)
-    );
+      .pipe(
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        () => this.pivotUpdateSucceeded(symbol, pivotInput),
+        () => this.pivotUpdateFailed(symbol, pivotInput, this.updateFailedMessage)
+      );
+  }
+
+  onRemoveClicked(symbol: string): void {
+    const message = this.formatString(this.verifyRemovingStockMessage, [symbol]);
+    this.stockToRemove = symbol;
+    this.openModal(message);
+  }
+
+  onRemoveConfirmationClicked(): void {
+    const stockToRemove = this.stockToRemove;
+    this.afterRemoveAlert();
+    this.removeStockFromTechnicalList(stockToRemove);
+  }
+
+  removeStockFromTechnicalList(stockToRemove: string): void {
+    this.beforeRemovingTechnicalStock();
+    this.stocksProcessingService.removeTechnicalStock(stockToRemove)
+      .pipe(
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        () => this.removedTechinicalStockSuccesfully(stockToRemove),
+        () => this.removingTechinicalStockFailed(stockToRemove)
+      );
+  }
+
+  removedTechinicalStockSuccesfully(stockToRemove: string): void {
+    this.technicallyValidStocks = this.technicallyValidStocks.filter(stock => stock.symbol !== stockToRemove);
+  }
+
+  removingTechinicalStockFailed(stockToRemove: string): void {
+    const message = this.formatString(this.removingStockFailedMessage, [stockToRemove]);
+    this.openModal(message);
+  }
+
+  afterRemoveAlert(): void {
+    this.stockToRemove = undefined;
+    this.closeModal();
   }
 
   beforeFetchingStocks(): void {
@@ -129,6 +150,11 @@ export class TechnicallyValidComponent implements OnInit {
 
   beforeUpdatingPivot(): void {
     this.spinnerText = 'Saving...';
+    this.showSpinner();
+  }
+
+  beforeRemovingTechnicalStock(): void {
+    this.spinnerText = 'Removing...';
     this.showSpinner();
   }
 
