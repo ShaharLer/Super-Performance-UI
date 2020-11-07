@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TechnicallyValidStock } from './../models/TechnicallyValidStock';
 
@@ -11,7 +11,7 @@ const headers = new HttpHeaders().set('Content-Type', 'application/json');
 export class StocksProcessingService {
 
   technicallyValidStocksUrl = 'http://localhost:8000/stocks/technically-valid/';
-  pivotUrl = 'http://localhost:8000/stocks/pivot/';
+  pivotUrl = 'http://localhost:8000/pivot/';
   symbolParamKey = 'symbol';
   pivotParamKey = 'pivot';
 

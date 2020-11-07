@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TechnicallyValidStock } from './../../models/TechnicallyValidStock';
+import { TechnicallyValidStock } from '../../models/TechnicallyValidStock';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { StocksProcessingService } from '../../services/stocks-processing.service';
 import { finalize } from 'rxjs/operators';
+import * as sharedConstatnts from '../shared-constants';
 
 @Component({
   selector: 'app-technically-valid',
@@ -13,7 +14,7 @@ export class TechnicallyValidComponent implements OnInit {
 
   technicallyValidStocks: TechnicallyValidStock[];
   tableHeaders = ['symbol', 'name', 'pivot', 'stock charts'];
-  stockChartsUrl = 'https://stockcharts.com/h-sc/ui?s=';
+  stockChartsUrl = sharedConstatnts.STOCK_CHARTS_URL;
   updatedPivots = new Map<string, number>();
   updatedStockSuccessfullyMessage = 'DB was updated succesfully ({0} : {1})';
   updateFailedMessage = 'Error: Failed to update {0} with pivot {1} in the DB, please try again later';

@@ -15,11 +15,13 @@ import { NasdaqDatesBarComponent } from './components/nasdaq-composite/nasdaq-da
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { TechnicallyValidComponent } from './components/technically-valid/technically-valid.component';
+import { BreakoutComponent } from './components/breakout/breakout.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'nasdaq', component: NasdaqComponent },
-  { path: 'technically-valid', component: TechnicallyValidComponent },
+  { path: 'pivots', component: TechnicallyValidComponent },
+  { path: 'breakouts', component: BreakoutComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' }
 ];
@@ -32,7 +34,8 @@ const routes: Routes = [
     NasdaqDatesBarComponent,
     HomeComponent,
     NavBarComponent,
-    TechnicallyValidComponent
+    TechnicallyValidComponent,
+    BreakoutComponent
   ],
   imports: [
     BrowserModule,

@@ -25,8 +25,16 @@ export class NasdaqComponent {
   }
 
   getNasdaqInfo(fromDate: Date, toDate: Date): void {
+    this.beforeCallToServer();
+    this.getNasdaqInfoFromServer(fromDate, toDate);
+  }
+
+  beforeCallToServer(): void {
     this.serverError = false;
     this.spinner.show();
+  }
+
+  getNasdaqInfoFromServer(fromDate: Date, toDate: Date): void {
     this.nasdaqEntries$ = this.nasdaqService.getNasdaqInfo(fromDate, toDate)
       .pipe(
         catchError(err => {
