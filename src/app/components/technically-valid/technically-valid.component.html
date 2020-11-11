@@ -1,14 +1,20 @@
 <div class="technical-stock-main-div">
-  <div class="modal" id="actionModal" [ngClass]="{'show': showModal}">
+  <div #modal class="modal">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-body"[ngClass]="(dbUpdateSucceded && !stockToRemove) ? 'db-update-success' : 'db-update-failure'">
+        <div class="modal-body" [ngClass]="modalClassType()">
           {{ modalBody }}
         </div>
         <div class="modal-footer">
-          <button *ngIf="stockToRemove" type="button" class="btn btn-secondary" (click)="afterRemoveAlert()" data-dismiss="modal">Cancel</button>
-          <button *ngIf="stockToRemove" type="button" class="btn btn-danger" (click)="onRemoveConfirmationClicked()" data-dismiss="modal">Remove</button>
-          <button *ngIf="!stockToRemove" type="button" class="btn btn-secondary" (click)="closeModal()" data-dismiss="modal">Close</button>
+          <button *ngIf="stockToRemove" type="button" class="btn btn-outline-secondary" (click)="afterRemoveAlert()" data-dismiss="modal">
+            Cancel
+          </button>
+          <button *ngIf="stockToRemove" type="button" class="btn btn-danger" (click)="onRemoveConfirmationClicked()" data-dismiss="modal">
+            Remove
+          </button>
+          <button *ngIf="!stockToRemove" type="button" class="btn btn-outline-secondary" (click)="closeModal()" data-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
     </div>

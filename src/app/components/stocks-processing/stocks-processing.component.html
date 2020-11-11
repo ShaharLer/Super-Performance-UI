@@ -1,0 +1,66 @@
+<div class="stocks-processing-main-div">
+  <div #alert class="alert" [ngClass]="alertType()" role="alert">
+    {{ alertMessage }}
+    <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div>
+    <button #backgroundManager type="button" class="btn btn-primary command-button" (click)="runBackgroundManager(backgroundManager)">
+      Run background manager
+    </button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary command-button" (click)="runScrapper()" [disabled]="true">
+      Run stocks scrapper
+    </button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary command-button" (click)="runStockRater()" [disabled]="true">
+      Run stocks rater
+    </button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary command-button" (click)="runTechnicalAnalysis()" [disabled]="true">
+      Run technical analysis
+    </button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary command-button" (click)="showBreakoutModal()">
+      Run breakout detection
+    </button>
+  </div>
+
+  <div #breakout class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form [formGroup]="breakoutModalForm">
+            <div class="form-group">
+              <input #password class="form-control" [type]="'password'" formControlName="password" placeholder="Enter password for breakout notifications mail...">
+                <button class="btn btn-dark eye-button" (mousedown)="showPassword()" (mouseup)="hidePassword()">
+                  <svg class="bi bi-eye eye" viewBox="0 0 16 16" attr.xlink:href="{{eyeImageUrl}}">
+                    <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                    <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                  </svg>
+                </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="hidePasswordModal()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-success" (click)="runBreakoutDetection()" [disabled]="!breakoutModalForm.valid">
+            Run
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-climbing-dot" [fullScreen]="true">
+    <p class="spinner">Loading...</p>
+  </ngx-spinner>
+</div>

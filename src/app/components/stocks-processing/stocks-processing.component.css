@@ -1,0 +1,46 @@
+.stocks-processing-main-div {
+  text-align: center;
+  margin: 20px;
+}
+
+.alert {
+  visibility: hidden;
+}
+
+.command-button {
+  margin: 20px;
+}
+
+.operation-launched-successfully {
+  background-color: grey;
+  color: #008c00;
+}
+
+.operation-launch-failure {
+  background-color: grey;
+  color: #e60000;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.modal-content {
+  background-color: lightskyblue;
+}
+
+.form-group {
+  display: flex;
+}
+
+.eye-button {
+  padding-bottom: 1px;
+  margin-left: 0.5px;
+}
+
+.eye {
+  padding-bottom: 2px;
+  width: 1.8em;
+  height: 1.8em;
+  fill: currentColor;
+}

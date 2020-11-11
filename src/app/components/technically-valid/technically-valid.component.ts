@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TechnicallyValidStock } from '../../models/TechnicallyValidStock';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { StocksProcessingService } from '../../services/stocks-processing.service';
+import { TechnicalService } from '../../services/technical.service';
 import { finalize } from 'rxjs/operators';
 import * as sharedConstatnts from '../shared-constants';
 
@@ -12,15 +12,10 @@ import * as sharedConstatnts from '../shared-constants';
 })
 export class TechnicallyValidComponent implements OnInit {
 
-  technicallyValidStocks: TechnicallyValidStock[];
   tableHeaders = ['symbol', 'name', 'pivot', 'stock charts'];
+  technicallyValidStocks: TechnicallyValidStock[];
   stockChartsUrl = sharedConstatnts.STOCK_CHARTS_URL;
   updatedPivots = new Map<string, number>();
-  updatedStockSuccessfullyMessage = 'DB was updated succesfully ({0} : {1})';
-  updateFailedMessage = 'Error: Failed to update {0} with pivot {1} in the DB, please try again later';
-  wrongPivotType = 'Error: Cannot update {0} - pivot must be a float number (the given value was {1})';
-  verifyRemovingStockMessage = 'Are you sure you want to remove {0} from the list?';
-  removingStockFailedMessage = 'Error: Failed to remove {0} from the techincally valid stocks in the DB, please try again later';
   showModal = false;
   dbUpdateSucceded: boolean;
   modalBody: string;
@@ -28,8 +23,10 @@ export class TechnicallyValidComponent implements OnInit {
   spinnerText: string;
   stockToRemove: string;
 
+  @ViewChild('modal') modal: ElementRef;
+
   constructor(private spinner: NgxSpinnerService,
-              private stocksProcessingService: StocksProcessingService) { }
+              private technicalService: TechnicalService) { }
 
   ngOnInit(): void {
     this.getTechnicallyValidStocks();
@@ -37,25 +34,17 @@ export class TechnicallyValidComponent implements OnInit {
 
   getTechnicallyValidStocks(): void {
     this.beforeFetchingStocks();
-    this.stocksProcessingService.getTechnicallyValidStocks()
-      .pipe(
-        finalize(() => {
-          this.spinner.hide();
-        })
-      )
+    this.technicalService.getTechnicallyValidStocks()
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe(
         (data: TechnicallyValidStock[]) => this.updateTechnicallyValidStocks(data),
-        () => this.onTechnicallyValidStockFetchFailed()
+        () => this.serverError = true
       );
   }
 
   updateTechnicallyValidStocks(data: TechnicallyValidStock[]): void {
     this.technicallyValidStocks = data;
     data.map(stock => this.updatedPivots[stock.symbol] = stock.pivot);
-  }
-
-  onTechnicallyValidStockFetchFailed(): void {
-    this.serverError = true;
   }
 
   isSaveDisabled(symbol: string, pivotInput: any): boolean {
@@ -79,7 +68,8 @@ export class TechnicallyValidComponent implements OnInit {
 
   onSaveClicked(symbol: string, pivotInput: any): void {
     if (!this.isPivotValid(Number(pivotInput.value))) {
-      this.pivotUpdateFailed(symbol, pivotInput, this.wrongPivotType);
+      const message = 'Error: Cannot update {0} - pivot must be a float number (the given value was {1})';
+      this.pivotUpdateFailed(symbol, pivotInput, message);
     } else {
       this.updatePivot(symbol, pivotInput);
     }
@@ -91,22 +81,22 @@ export class TechnicallyValidComponent implements OnInit {
 
   updatePivot(symbol: string, pivotInput: any): void {
     this.beforeUpdatingPivot();
-    this.stocksProcessingService.updateStockPivot(symbol, Number(pivotInput.value))
-      .pipe(
-        finalize(() => {
-          this.spinner.hide();
-        })
-      )
+    this.technicalService.updateStockPivot(symbol, Number(pivotInput.value))
+      .pipe(finalize(() => this.spinner.hide() ))
       .subscribe(
         () => this.pivotUpdateSucceeded(symbol, pivotInput),
-        () => this.pivotUpdateFailed(symbol, pivotInput, this.updateFailedMessage)
+        () => {
+                const message = 'Error: Failed to update {0} with pivot {1} in the DB, try again later';
+                this.pivotUpdateFailed(symbol, pivotInput, message);
+              }
       );
   }
 
   onRemoveClicked(symbol: string): void {
-    const message = this.formatString(this.verifyRemovingStockMessage, [symbol]);
+    const message = 'Are you sure you want to remove {0} from the list?';
+    const formattedMessage = this.formatString([symbol], message);
     this.stockToRemove = symbol;
-    this.openModal(message);
+    this.openModal(formattedMessage);
   }
 
   onRemoveConfirmationClicked(): void {
@@ -117,12 +107,8 @@ export class TechnicallyValidComponent implements OnInit {
 
   removeStockFromTechnicalList(stockToRemove: string): void {
     this.beforeRemovingTechnicalStock();
-    this.stocksProcessingService.removeTechnicalStock(stockToRemove)
-      .pipe(
-        finalize(() => {
-          this.spinner.hide();
-        })
-      )
+    this.technicalService.removeTechnicalStock(stockToRemove)
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe(
         () => this.removedTechinicalStockSuccesfully(stockToRemove),
         () => this.removingTechinicalStockFailed(stockToRemove)
@@ -134,8 +120,9 @@ export class TechnicallyValidComponent implements OnInit {
   }
 
   removingTechinicalStockFailed(stockToRemove: string): void {
-    const message = this.formatString(this.removingStockFailedMessage, [stockToRemove]);
-    this.openModal(message);
+    const message = 'Error: Failed to remove {0} from the techincally valid stocks in the DB, try again later';
+    const formattedMessage = this.formatString([stockToRemove], message);
+    this.openModal(formattedMessage);
   }
 
   afterRemoveAlert(): void {
@@ -164,20 +151,21 @@ export class TechnicallyValidComponent implements OnInit {
   }
 
   pivotUpdateSucceeded(symbol: string, pivotInput: any): void {
-    const message = this.formatString(this.updatedStockSuccessfullyMessage, [symbol, pivotInput.value]);
+    const message = 'DB was updated succesfully ({0} : {1})';
+    const formattedMessage = this.formatString([symbol, pivotInput.value], message);
     this.dbUpdateSucceded = true;
     this.updatedPivots[symbol] = Number(pivotInput.value);
-    this.execModalAfterSavedClicked(message, pivotInput);
+    this.execModalAfterSavedClicked(formattedMessage, pivotInput);
   }
 
   pivotUpdateFailed(symbol: string, pivotInput: any, bodyMessage: string): void {
-    const message = this.formatString(bodyMessage, [symbol, pivotInput.value]);
+    const message = this.formatString([symbol, pivotInput.value], bodyMessage);
     this.dbUpdateSucceded = false;
     pivotInput.value = this.updatedPivots[symbol];
     this.execModalAfterSavedClicked(message, pivotInput);
   }
 
-  formatString(str: string, args: string[]): string {
+  formatString(args: string[], str: string): string {
     for (let i = 0; i < args.length; i++) {
       str = str.replace('{' + i + '}', args[i]);
     }
@@ -191,10 +179,18 @@ export class TechnicallyValidComponent implements OnInit {
 
   openModal(bodyMessage: string): void {
     this.modalBody = bodyMessage;
-    this.showModal = true;
+    this.modal.nativeElement.style.display = 'block';
   }
 
   closeModal(): void {
-    this.showModal = false;
+    this.modal.nativeElement.style.display = 'none';
+  }
+
+  modalClassType(): object {
+    if (this.dbUpdateSucceded && !this.stockToRemove) {
+      return {'db-update-success': true};
+    } else {
+      return {'db-update-failure': true};
+    }
   }
 }

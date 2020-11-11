@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,9 +16,11 @@ import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { TechnicallyValidComponent } from './components/technically-valid/technically-valid.component';
 import { BreakoutComponent } from './components/breakout/breakout.component';
+import { StocksProcessingComponent } from './components/stocks-processing/stocks-processing.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'stocks-processing', component: StocksProcessingComponent },
   { path: 'nasdaq', component: NasdaqComponent },
   { path: 'pivots', component: TechnicallyValidComponent },
   { path: 'breakouts', component: BreakoutComponent },
@@ -35,12 +37,14 @@ const routes: Routes = [
     HomeComponent,
     NavBarComponent,
     TechnicallyValidComponent,
-    BreakoutComponent
+    BreakoutComponent,
+    StocksProcessingComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
