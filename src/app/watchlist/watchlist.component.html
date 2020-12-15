@@ -1,0 +1,61 @@
+
+  <head>
+
+  </head>
+
+
+
+<body onload="watchlist.showSpinner();">
+  <br> 
+  <br>
+
+ <!-- Load icon library -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+ <!-- The form -->
+ <form id ="add_form" class="example" style="margin:auto;max-width:800px" >
+   <input type="text" placeholder="Stock name..." name="search">
+   <button type="submit"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+ </form> 
+
+
+
+    <div class="container">
+    <table id ="my_table" class="responsive-table">
+      <thead>
+        <tr>
+          
+
+          <th scope="col"> <button class="btn" onclick="watchlist.sortTable(0)">Stock symbol</button>
+          </th>
+          <th scope="col">Pivot</th>
+          <th scope="col">Current price</th>
+          <th scope="col"><button class="btn"  onclick="watchlist.sortTable(3)">Volume</button></th>
+          <th scope="col"><button  class="btn"  onclick="watchlist.sortTable(4)">Price change</button></th>
+          <th scope="col">Action</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+
+
+                
+
+        </tr>
+
+
+    
+      </tbody>
+    </table>
+
+
+    <div id="loading" class="loading">
+        Loading&#8230;
+    </div>
+ 
+  </div>
+ 
+</body>
+

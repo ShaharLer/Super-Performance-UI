@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,6 +17,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { TechnicallyValidComponent } from './components/technically-valid/technically-valid.component';
 import { BreakoutComponent } from './components/breakout/breakout.component';
 import { StocksProcessingComponent } from './components/stocks-processing/stocks-processing.component';
+import {DistributionComponent} from './components/distribution-days/distribution/distribution-days.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'nasdaq', component: NasdaqComponent },
   { path: 'pivots', component: TechnicallyValidComponent },
   { path: 'breakouts', component: BreakoutComponent },
+  { path: 'dist', component: DistributionComponent },
+  { path: 'watchlist' ,component: WatchlistComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' }
 ];
@@ -38,7 +42,8 @@ const routes: Routes = [
     NavBarComponent,
     TechnicallyValidComponent,
     BreakoutComponent,
-    StocksProcessingComponent
+    StocksProcessingComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,
