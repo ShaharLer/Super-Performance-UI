@@ -156,7 +156,7 @@ class watchlist{
         cell1.className = "tooltip2";
         cell1.appendChild(span);   
 
-        cell2.innerHTML = 1;
+        cell2.innerHTML = '';
         cell3.innerHTML = current_price;
         cell4.innerHTML = volume_change;
         cell5.innerHTML = price_change;
@@ -192,12 +192,13 @@ class watchlist{
     }
       
     
-    update_key_of_table(stock_symbol,eps_array,net_income_array,sales_array, volume_change, price_change){
+    update_key_of_table(stock_symbol,eps_array,net_income_array,sales_array, volume_change, price_change, current_stock_price){
     
         var row = document.getElementById(stock_symbol);
-
+        row.cells[2].innerHTML = current_stock_price
         row.cells[3].innerHTML = volume_change;
         row.cells[4].innerHTML = price_change;
+
         //update_color_of_cell(row.cells[5],price_change)
     
     }
