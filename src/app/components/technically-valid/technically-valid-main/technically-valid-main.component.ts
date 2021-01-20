@@ -1,16 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { TechnicallyValidStock } from '../../models/TechnicallyValidStock';
+import { TechnicallyValidStock } from '../../../models/TechnicallyValidStock';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { TechnicalService } from '../../services/technical.service';
+import { TechnicalService } from '../../../services/technical.service';
 import { finalize } from 'rxjs/operators';
-import * as sharedConstatnts from '../shared-constants';
+import * as sharedConstatnts from '../../shared-constants';
 
 @Component({
-  selector: 'app-technically-valid',
-  templateUrl: './technically-valid.component.html',
-  styleUrls: ['./technically-valid.component.css']
+  selector: 'app-technically-valid-main',
+  templateUrl: './technically-valid-main.component.html',
+  styleUrls: ['./technically-valid-main.component.css']
 })
-export class TechnicallyValidComponent implements OnInit {
+export class TechnicallyValidMainComponent implements OnInit {
 
   tableHeaders = ['symbol', 'name', 'pivot', 'stock charts'];
   technicallyValidStocks: TechnicallyValidStock[];
@@ -56,7 +56,7 @@ export class TechnicallyValidComponent implements OnInit {
     return pivotInput.disabled;
   }
 
-  onUpdateClicked(pivotInput: any, symbol: string): void {
+  onUpdateClicked(pivotInput: any): void {
     pivotInput.disabled = false;
     pivotInput.focus();
   }

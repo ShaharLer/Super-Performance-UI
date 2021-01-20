@@ -11,7 +11,7 @@ export class StocksProcessingService {
 
   prefixUrl = 'http://localhost:8000/';
   backgroundManagerUrl = `${this.prefixUrl}background/`;
-  scrapperUrl = `${this.prefixUrl}scrapper/`;
+  scrapperUrl = `${this.prefixUrl}scrapper_q/`;
   raterUrl = `${this.prefixUrl}rater/`;
   technicalAnalysisUrl = `${this.prefixUrl}technical/`;
   breakoutDetectionUrl = `${this.prefixUrl}breakout/`;
@@ -20,10 +20,12 @@ export class StocksProcessingService {
   constructor(private httpClient: HttpClient) { }
 
   runBackgroundManager(): Observable<any> {
+    console.log('here');
     return this.httpClient.get<any>(this.backgroundManagerUrl);
   }
 
   runScrapper(): Observable<any> {
+    console.log('scrapper here');
     return this.httpClient.get<any>(this.scrapperUrl);
   }
 

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TechnicallyValidComponent } from './technically-valid.component';
+import { BreakoutErrorComponent } from './breakout-error.component';
 
-describe('TechnicallyValidComponent', () => {
-  let component: TechnicallyValidComponent;
-  let fixture: ComponentFixture<TechnicallyValidComponent>;
+describe('BreakoutErrorComponent', () => {
+  let component: BreakoutErrorComponent;
+  let fixture: ComponentFixture<BreakoutErrorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TechnicallyValidComponent ]
+      declarations: [ BreakoutErrorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TechnicallyValidComponent);
+    fixture = TestBed.createComponent(BreakoutErrorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

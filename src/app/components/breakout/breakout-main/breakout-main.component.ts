@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BreakoutService } from './../../services/breakout.service';
-import { BreakoutStock } from './../../models/BreakoutStock';
+import { BreakoutService } from '../../../services/breakout.service';
+import { BreakoutStock } from '../../../models/BreakoutStock';
 import { finalize, catchError } from 'rxjs/operators';
-import * as sharedConstatnts from '../shared-constants';
+import * as sharedConstatnts from '../../shared-constants';
 
 @Component({
-  selector: 'app-breakout',
-  templateUrl: './breakout.component.html',
-  styleUrls: ['./breakout.component.css']
+  selector: 'app-breakout-main',
+  templateUrl: './breakout-main.component.html',
+  styleUrls: ['./breakout-main.component.css']
 })
-export class BreakoutComponent implements OnInit {
+export class BreakoutMainComponent implements OnInit {
 
   stockChartsUrl = sharedConstatnts.STOCK_CHARTS_URL;
   tableHeaders = ['symbol', 'name', 'pivot', 'stock charts'];

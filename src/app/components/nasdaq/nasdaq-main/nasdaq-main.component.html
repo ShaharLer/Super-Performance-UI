@@ -1,0 +1,12 @@
+<div>
+  <app-nasdaq-dates-bar (sendDates)="getNasdaqInfoByDates($event)"></app-nasdaq-dates-bar>
+
+  <app-nasdaq-sma-list *ngIf="!serverError; else error" [nasdaqEntries]="nasdaqEntries$ | async">
+  </app-nasdaq-sma-list>
+
+  <ng-template #error>
+    <app-nasdaq-error></app-nasdaq-error>
+  </ng-template>
+
+  <app-spinner [spinnerText]="'Loading...'"></app-spinner>
+</div>

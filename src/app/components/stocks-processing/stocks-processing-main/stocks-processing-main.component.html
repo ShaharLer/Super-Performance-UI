@@ -12,17 +12,17 @@
     </button>
   </div>
   <div>
-    <button type="button" class="btn btn-primary command-button" (click)="runScrapper()" [disabled]="true">
+    <button type="button" class="btn btn-primary command-button" (click)="runScrapper()" [disabled]="false">
       Run stocks scrapper
     </button>
   </div>
   <div>
-    <button type="button" class="btn btn-primary command-button" (click)="runStockRater()" [disabled]="true">
+    <button type="button" class="btn btn-primary command-button" (click)="runStockRater()" [disabled]="false">
       Run stocks rater
     </button>
   </div>
   <div>
-    <button type="button" class="btn btn-primary command-button" (click)="runTechnicalAnalysis()" [disabled]="true">
+    <button type="button" class="btn btn-primary command-button" (click)="runTechnicalAnalysis()" [disabled]="false">
       Run technical analysis
     </button>
   </div>
@@ -60,7 +60,5 @@
     </div>
   </div>
 
-  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-climbing-dot" [fullScreen]="true">
-    <p class="spinner">Loading...</p>
-  </ngx-spinner>
+  <app-spinner [spinnerText]="'Loading...'"></app-spinner>
 </div>

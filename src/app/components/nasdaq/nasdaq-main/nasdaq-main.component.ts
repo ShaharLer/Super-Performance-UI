@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 import { finalize, catchError } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-nasdaq',
-  templateUrl: './nasdaq.component.html',
-  styleUrls: ['./nasdaq.component.css']
+  selector: 'app-nasdaq-main',
+  templateUrl: './nasdaq-main.component.html',
+  styleUrls: ['./nasdaq-main.component.css']
 })
-export class NasdaqComponent {
+export class NasdaqMainComponent {
 
   nasdaqEntries$: Observable<NasdaqComposite[]>;
   serverError: boolean;

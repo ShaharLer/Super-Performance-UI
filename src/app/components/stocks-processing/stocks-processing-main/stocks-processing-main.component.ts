@@ -1,15 +1,15 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { StocksProcessingService } from '../../services/stocks-processing.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { StocksProcessingService } from '../../../services/stocks-processing.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-stocks-processing',
-  templateUrl: './stocks-processing.component.html',
-  styleUrls: ['./stocks-processing.component.css']
+  selector: 'app-stocks-processing-main',
+  templateUrl: './stocks-processing-main.component.html',
+  styleUrls: ['./stocks-processing-main.component.css']
 })
-export class StocksProcessingComponent implements OnInit {
+export class StocksProcessingMainComponent implements OnInit {
 
   breakoutModalForm: FormGroup;
   alertMessage: string;

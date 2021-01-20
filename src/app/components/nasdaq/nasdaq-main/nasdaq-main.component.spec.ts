@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StocksProcessingComponent } from './stocks-processing.component';
+import { NasdaqMainComponent } from './nasdaq-main.component';
 
-describe('StocksProcessingComponent', () => {
-  let component: StocksProcessingComponent;
-  let fixture: ComponentFixture<StocksProcessingComponent>;
+describe('NasdaqMainComponent', () => {
+  let component: NasdaqMainComponent;
+  let fixture: ComponentFixture<NasdaqMainComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StocksProcessingComponent ]
+      declarations: [ NasdaqMainComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StocksProcessingComponent);
+    fixture = TestBed.createComponent(NasdaqMainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BreakoutComponent } from './breakout.component';
+import { BreakoutMainComponent } from './breakout-main.component';
 
-describe('BreakoutComponent', () => {
-  let component: BreakoutComponent;
-  let fixture: ComponentFixture<BreakoutComponent>;
+describe('BreakoutMainComponent', () => {
+  let component: BreakoutMainComponent;
+  let fixture: ComponentFixture<BreakoutMainComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BreakoutComponent ]
+      declarations: [ BreakoutMainComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BreakoutComponent);
+    fixture = TestBed.createComponent(BreakoutMainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

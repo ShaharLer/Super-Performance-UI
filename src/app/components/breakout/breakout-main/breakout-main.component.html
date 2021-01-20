@@ -22,13 +22,8 @@
   </table>
 
   <ng-template #error>
-    <div class="alert alert-danger error" role="alert">
-      Oops...<br/>An error occured while making an HTTP call to the server.<br/>
-      Please try again by clicking <span class="retry" (click)="getBreakoutStocks()">here</span>
-    </div>
+    <app-breakout-error (breakoutStocks)="getBreakoutStocks()"></app-breakout-error>
   </ng-template>
 
-  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-climbing-dot" [fullScreen] = "true">
-    <p class="spinner">Loading...</p>
-  </ngx-spinner>
+  <app-spinner [spinnerText]="'Loading...'"></app-spinner>
 </div>
