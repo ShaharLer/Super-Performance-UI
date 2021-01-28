@@ -11,7 +11,10 @@ export class StocksProcessingService {
 
   prefixUrl = 'http://localhost:8000/';
   backgroundManagerUrl = `${this.prefixUrl}background/`;
-  scrapperUrl = `${this.prefixUrl}scrapper_q/`;
+  quarterlyScrapperUrl = `${this.prefixUrl}scrapper_q/`;
+  yearlyScrapperUrl = `${this.prefixUrl}scrapper_y/`;
+  yahooScrapperUrl = `${this.prefixUrl}yahoo_scrapper/`;
+  sectorAndIndustryUpdaterUrl = `${this.prefixUrl}sector_industry_update/`;
   raterUrl = `${this.prefixUrl}rater/`;
   technicalAnalysisUrl = `${this.prefixUrl}technical/`;
   breakoutDetectionUrl = `${this.prefixUrl}breakout/`;
@@ -20,13 +23,23 @@ export class StocksProcessingService {
   constructor(private httpClient: HttpClient) { }
 
   runBackgroundManager(): Observable<any> {
-    console.log('here');
     return this.httpClient.get<any>(this.backgroundManagerUrl);
   }
 
-  runScrapper(): Observable<any> {
-    console.log('scrapper here');
-    return this.httpClient.get<any>(this.scrapperUrl);
+  runQuarterlyScrapper(): Observable<any> {
+    return this.httpClient.get<any>(this.quarterlyScrapperUrl);
+  }
+
+  runYearlyScrapper(): Observable<any> {
+    return this.httpClient.get<any>(this.yearlyScrapperUrl);
+  }
+
+  runYahooScrapper(): Observable<any> {
+    return this.httpClient.get<any>(this.yahooScrapperUrl);
+  }
+
+  runSectorAndIndustryUpdater(): Observable<any> {
+    return this.httpClient.get<any>(this.sectorAndIndustryUpdaterUrl);
   }
 
   runRater(): Observable<any> {

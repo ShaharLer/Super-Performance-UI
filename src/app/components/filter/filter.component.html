@@ -1,0 +1,168 @@
+<div class="filters-main">
+  <div #modal class="modal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content" style="background-color: whitesmoke">
+        <div class="modal-body" style="color: #e60000; font-weight: bold;">
+          {{ modalBody }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="closeModal()" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-row-type">
+      <div style="display: flex; border-style: solid; padding: 4px;">
+        <span style="flex-grow: 0.5;"><b>Quarterly</b></span>
+        <span style="margin-right: 16px; flex-grow: 1;">
+          <span style="margin-right: 4px;">EPS growth threshold</span>
+          <input id="epsThresholdQ" type="text" [(ngModel)]="epsGrowthThresholdQ" size="3" maxlength="5">
+        </span>
+        <span style="margin-right: 16px; flex-grow: 1;">
+          <span style="margin-right: 4px;">EPS growth quarters</span>
+          <select #epsGrowthQuarters>
+            <option value="" selected></option>
+            <option *ngFor="let number of quartersGrowthToFollow">{{ number }}</option>
+          </select>
+        </span>
+        <span style="margin-right: 16px; flex-grow: 1;">
+          <span style="margin-right: 4px;">Acceleration quarters</span>
+          <select #accelerationQuarters>
+            <option value="" selected></option>
+            <option *ngFor="let number of quartersAccelerationToFollow">{{ number }}</option>
+          </select>
+        </span>
+      </div>
+    </div>
+    <div class="filter-row-type">
+      <div style="display: flex; border-style: solid; padding: 4px;">
+        <span style="flex-grow: 0.5;"><b>Yearly</b></span>
+        <span style="margin-right: 16px; flex-grow: 1;">
+          <span style="margin-right: 4px;">EPS growth threshold</span>
+          <input type="text" [(ngModel)]="epsGrowthThresholdY" size="3" maxlength="5">
+        </span>
+        <span style="margin-right: 16px; flex-grow: 1;">
+          <span style="margin-right: 4px;">EPS growth years</span>
+          <select #epsGrowthYears>
+            <option value="" selected></option>
+            <option *ngFor="let number of yearsGrowthToFollow">{{ number }}</option>
+          </select>
+        </span>
+        <span style="margin-right: 16px; flex-grow: 1;">
+          <span style="margin-right: 4px;">Acceleration years</span>
+          <select #accelerationYears>
+            <option value="" selected></option>
+            <option *ngFor="let number of yearsAccelerationToFollow">{{ number }}</option>
+          </select>
+        </span>
+      </div>
+    </div>
+    <div class="filter-row-type">
+      <div style="display: flex; border-style: solid; padding: 4px;">
+        <span style="flex-grow: 0.5;"><b>General</b></span>
+        <span style="margin-right: 16px; flex-grow: 5;">
+          <span style="margin-right: 4px;">Sales growth threshold</span>
+          <input type="text" [(ngModel)]="salesGrowthThreshold" size="3" maxlength="5">
+        </span>
+      </div>
+    </div>
+    <div class="filter-row-type">
+      <div style="display: flex; border-style: solid; padding: 4px;">
+        <span style="flex-grow: 0.5;"><b>Symbol filter</b></span>
+        <span style="margin-right: 16px; flex-grow: 5;">
+          <span style="margin-right: 4px;">Symbol</span>
+          <input type="text" [(ngModel)]="stockSymbol" size="3" maxlength="5">
+        </span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="filterStocks()">
+      Filter
+    </button>
+    <span *ngIf="filteredStocks" style="margin-left: 8px;">
+      <b>Filtered stocks: {{ filteredStocks.length }}</b>
+    </span>
+  </div>
+
+  <div>
+    <table *ngIf="!serverError" class="table table-bordered table-secondary" style="text-align: center; margin-top: 8px;">
+      <thead class="table-dark">
+        <tr>
+          <th *ngFor="let header of tableHeaders">{{ header }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stock of filteredStocks">
+          <th>{{ stock.symbol }}</th>
+          <th>{{ stock.name }}</th>
+          <th>{{ stock.sector }}</th>
+          <th>{{ stock.industry }}</th>
+          <th>{{ stock.price_to_sell_ratio }}</th>
+          <th>
+            <a href="{{stockChartsUrl + stock.symbol}}" target="_blank">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </a>
+          </th>
+          <th>
+            <a href="{{sectorStageAnalysisUrl + stock.symbol}}" target="_blank">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </a>
+          </th>
+          <th>
+            <a href="{{shortAndVolumeUrl + stock.symbol}}" target="_blank">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </a>
+          </th>
+          <th>
+            <a href="{{institutionalOwnershipUrl + stock.symbol + '/ownership'}}" target="_blank">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </a>
+          </th>
+          <th>
+            <a href="{{mansfieldsRsUrl + stock.symbol}}" target="_blank">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </a>
+          </th>
+          <th>
+            <a href="{{yahooFinanceUrl + stock.symbol}}" target="_blank">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </a>
+          </th>
+          <th>
+            <a href="{{stockCompetitorsUrl + stock.symbol + '/peers/comparison'}}" target="_blank">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </a>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #error>
+      <div class="alert alert-danger error" role="alert">
+        Oops...<br/>An error occured while making an HTTP call to the server.<br/>
+        Please try again by clicking <span class="retry" (click)="filterStocks()">here</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <app-spinner [spinnerText]="spinnerText"></app-spinner>
+</div>

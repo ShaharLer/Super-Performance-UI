@@ -12,11 +12,26 @@
     </button>
   </div>
   <div>
-    <button type="button" class="btn btn-primary command-button" (click)="runScrapper()" [disabled]="false">
-      Run stocks scrapper
+    <button type="button" class="btn btn-primary command-button" (click)="runQuarterlyScrapper()" [disabled]="false">
+      Run quarterly stocks scrapper
     </button>
   </div>
   <div>
+    <button type="button" class="btn btn-primary command-button" (click)="runYearlyScrapper()" [disabled]="false">
+      Run yearly stocks scrapper
+    </button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary command-button" (click)="runYahooScrapper()" [disabled]="false">
+      Run yahoo stocks scrapper
+    </button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary command-button" (click)="updateSectorAndIndustry()" [disabled]="false">
+      Update sector & industry
+    </button>
+  </div>
+  <!-- <div>
     <button type="button" class="btn btn-primary command-button" (click)="runStockRater()" [disabled]="false">
       Run stocks rater
     </button>
@@ -25,7 +40,7 @@
     <button type="button" class="btn btn-primary command-button" (click)="runTechnicalAnalysis()" [disabled]="false">
       Run technical analysis
     </button>
-  </div>
+  </div> -->
   <div>
     <button type="button" class="btn btn-primary command-button" (click)="showBreakoutModal()">
       Run breakout detection

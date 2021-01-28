@@ -1,1 +1,15 @@
+export const EPS_GROWTH_THRESHOLD_Q = 'eps_growth_threshold_q';
+export const EPS_GROWTH_QUARTERS = 'eps_growth_quarters';
+export const EPS_GROWTH_THRESHOLD_Y = 'eps_growth_threshold_y';
+export const EPS_GROWTH_YEARS = 'eps_growth_years';
+export const ACCELERATION_QUARTERS = 'acceleration_quarters';
+export const ACCELERATION_YEARS = 'acceleration_years';
+export const SALES_GROWTH_THRESHOLD = 'sales_growth_threshold';
+export const STOCK_SYMBOL = 'stock_symbol';
 export const STOCK_CHARTS_URL = 'https://stockcharts.com/h-sc/ui?s=';
+export const SECTOR_STAGE_ANALYSIS_URL = 'https://screener.nextbigtrade.com/#/sectors/';
+export const SHORT_AND_VOLUME_URL = 'https://finviz.com/quote.ashx?ty=c&ta=0&p=w&t=';
+export const INSTITUTIONAL_OWNERSHIP_URL = 'https://www.gurufocus.com/stock/';
+export const MANSFIELDS_RS_URL = 'https://www.chartmill.com/stock/stock-charts?o1=3&op1=200,16711680&o2=3&op2=50,255&o3=1&i4=24&ip4=52&ticker=';
+export const YAHOO_FINANCE_URL = 'https://finance.yahoo.com/quote/';
+export const STOCK_COMPETITORS_URL = 'https://seekingalpha.com/symbol/'

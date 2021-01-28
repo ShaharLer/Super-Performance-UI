@@ -1,0 +1,18 @@
+.filters-main {
+  padding: 4px 8px;
+}
+
+.filters-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.filter-row-type {
+  flex-grow: 1;
+  margin: 4px;
+}
+
+.row-title {
+  font-weight: bold;
+}

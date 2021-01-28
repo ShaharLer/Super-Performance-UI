@@ -23,11 +23,13 @@ import { BreakoutErrorComponent } from './components/breakout/breakout-error/bre
 import { StocksProcessingMainComponent } from './components/stocks-processing/stocks-processing-main/stocks-processing-main.component';
 import { DistributionComponent } from './components/distribution-days/distribution/distribution-days.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'stocks-processing', component: StocksProcessingMainComponent },
-  { path: 'nasdaq', component: NasdaqMainComponent },
+  // { path: 'nasdaq', component: NasdaqMainComponent },
+  { path: 'filter', component: FilterComponent },
   { path: 'pivots', component: TechnicallyValidMainComponent },
   { path: 'breakouts', component: BreakoutMainComponent },
   { path: 'dist', component: DistributionComponent },
@@ -50,7 +52,8 @@ const routes: Routes = [
     NasdaqDatesBarComponent,
     NasdaqErrorComponent,
     BreakoutMainComponent,
-    BreakoutErrorComponent
+    BreakoutErrorComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,

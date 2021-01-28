@@ -44,13 +44,43 @@ export class StocksProcessingMainComponent implements OnInit {
       );
   }
 
-  runScrapper(): void {
+  runQuarterlyScrapper(): void {
     this.beforeRunningCommand();
-    this.stocksProcessingService.runScrapper()
+    this.stocksProcessingService.runQuarterlyScrapper()
       .pipe(finalize(() => this.afterRunningCommand()))
       .subscribe(
-        () => this.afterSuccessfullLaunch('Scrapper is launched successfully'),
-        () => this.afterFailedLaunch('Failed to launch the stocks Scrapper')
+        () => this.afterSuccessfullLaunch('Quarterly scrapper is launched successfully'),
+        () => this.afterFailedLaunch('Failed to launch the stocks Quarterly scrapper')
+      );
+  }
+
+  runYearlyScrapper(): void {
+    this.beforeRunningCommand();
+    this.stocksProcessingService.runYearlyScrapper()
+      .pipe(finalize(() => this.afterRunningCommand()))
+      .subscribe(
+        () => this.afterSuccessfullLaunch('Yearly scrapper is launched successfully'),
+        () => this.afterFailedLaunch('Failed to launch the stocks Yearly scrapper')
+      );
+  }
+
+  runYahooScrapper(): void {
+    this.beforeRunningCommand();
+    this.stocksProcessingService.runYahooScrapper()
+      .pipe(finalize(() => this.afterRunningCommand()))
+      .subscribe(
+        () => this.afterSuccessfullLaunch('Yahoo scrapper is launched successfully'),
+        () => this.afterFailedLaunch('Failed to launch the stocks Yahoo scrapper')
+      );
+  }
+
+  updateSectorAndIndustry(): void {
+    this.beforeRunningCommand();
+    this.stocksProcessingService.runSectorAndIndustryUpdater()
+      .pipe(finalize(() => this.afterRunningCommand()))
+      .subscribe(
+        () => this.afterSuccessfullLaunch('Sector and industry updater launched successfully'),
+        () => this.afterFailedLaunch('Failed to launch Sector and industry updater')
       );
   }
 
@@ -60,7 +90,7 @@ export class StocksProcessingMainComponent implements OnInit {
       .pipe(finalize(() => this.afterRunningCommand()))
       .subscribe(
         () => this.afterSuccessfullLaunch('Stock rater is launched successfully'),
-        () => this.afterFailedLaunch('Failed to launch the tocks Rater')
+        () => this.afterFailedLaunch('Failed to launch the Stocks rater')
       );
   }
 
